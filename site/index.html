@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VentShield — Stop Breathing What Your Vent Is Growing</title>
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --fg: #e8e8e8;
+      --accent: #00d4aa;
+      --accent-dim: #009977;
+      --card-bg: #141414;
+      --border: #222;
+      --muted: #888;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Nav */
+    nav {
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    nav .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+    .logo span { color: var(--accent); }
+    nav a {
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      padding: 8px 20px;
+      border: 1px solid var(--accent);
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+    nav a:hover {
+      background: var(--accent);
+      color: var(--bg);
+    }
+
+    /* Hero */
+    .hero {
+      padding: 100px 0 80px;
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      font-weight: 800;
+      letter-spacing: -1px;
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--muted);
+      max-width: 580px;
+      margin: 0 auto 36px;
+    }
+    .cta-btn {
+      display: inline-block;
+      background: var(--accent);
+      color: var(--bg);
+      font-size: 1.05rem;
+      font-weight: 700;
+      padding: 14px 36px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .cta-btn:hover { background: var(--accent-dim); }
+    .cta-sub {
+      display: block;
+      margin-top: 10px;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    /* Section */
+    section { padding: 80px 0; }
+    section + section { border-top: 1px solid var(--border); }
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    section h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      letter-spacing: -0.5px;
+    }
+    section > .container > p {
+      color: var(--muted);
+      max-width: 600px;
+      margin-bottom: 40px;
+    }
+
+    /* Problem */
+    .problem-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+    .problem-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 28px;
+    }
+    .problem-card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+    }
+    .problem-card p {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    /* How it works */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+      counter-reset: step;
+    }
+    .step {
+      counter-increment: step;
+      position: relative;
+      padding: 32px 28px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+    .step::before {
+      content: counter(step);
+      display: block;
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--accent);
+      margin-bottom: 12px;
+      line-height: 1;
+    }
+    .step h3 { margin-bottom: 8px; }
+    .step p { color: var(--muted); font-size: 0.95rem; }
+
+    /* Features */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .feature {
+      padding: 28px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+    .feature-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      background: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      font-size: 1.2rem;
+    }
+    .feature h3 { margin-bottom: 6px; font-size: 1.05rem; }
+    .feature p { color: var(--muted); font-size: 0.9rem; }
+
+    /* Comparison */
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    .comparison-table th,
+    .comparison-table td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    .comparison-table th {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--muted);
+    }
+    .comparison-table td:last-child {
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .comparison-table tr:last-child td { border-bottom: none; }
+    .x { color: #ff4444; }
+    .check { color: var(--accent); }
+
+    /* Pricing */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+    .price-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 32px 28px;
+      text-align: center;
+    }
+    .price-card.featured {
+      border-color: var(--accent);
+      position: relative;
+    }
+    .price-card.featured::after {
+      content: "BEST VALUE";
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent);
+      color: var(--bg);
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 3px 12px;
+      border-radius: 3px;
+      letter-spacing: 1px;
+    }
+    .price-card h3 { margin-bottom: 4px; }
+    .price-card .price {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--accent);
+      margin: 12px 0;
+    }
+    .price-card .price span {
+      font-size: 0.9rem;
+      color: var(--muted);
+      font-weight: 400;
+    }
+    .price-card ul {
+      list-style: none;
+      text-align: left;
+      margin: 20px 0;
+    }
+    .price-card li {
+      padding: 6px 0;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    .price-card li::before {
+      content: "\2713  ";
+      color: var(--accent);
+    }
+
+    /* FAQ */
+    details {
+      border-bottom: 1px solid var(--border);
+      padding: 20px 0;
+    }
+    summary {
+      font-weight: 600;
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    summary::after {
+      content: "+";
+      font-size: 1.4rem;
+      color: var(--accent);
+      transition: transform 0.2s;
+    }
+    details[open] summary::after {
+      content: "\2212";
+    }
+    details p {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 0.95rem;
+      max-width: 600px;
+    }
+
+    /* Signup */
+    .signup {
+      text-align: center;
+      padding: 80px 0;
+      border-top: 1px solid var(--border);
+    }
+    .signup h2 { margin-bottom: 12px; }
+    .signup > .container > p {
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+    .email-form {
+      display: flex;
+      gap: 8px;
+      max-width: 440px;
+      margin: 0 auto;
+    }
+    .email-form input {
+      flex: 1;
+      padding: 12px 16px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--fg);
+      font-size: 1rem;
+    }
+    .email-form input::placeholder { color: #555; }
+    .email-form input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    .email-form button {
+      padding: 12px 24px;
+      background: var(--accent);
+      color: var(--bg);
+      border: none;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+    .email-form button:hover { background: var(--accent-dim); }
+
+    /* Footer */
+    footer {
+      padding: 40px 0;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    @media (max-width: 600px) {
+      .hero { padding: 60px 0 50px; }
+      section { padding: 50px 0; }
+      .email-form { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <div class="logo">Vent<span>Shield</span></div>
+    <a href="#signup">Get Early Access</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container">
+    <h1>Stop breathing what<br>your vent is <em>growing</em>.</h1>
+    <p>VentShield snaps onto any vent register in seconds. Antimicrobial filter inserts capture mold spores and allergens before they reach you. Collapses flat enough to pack in a carry-on.</p>
+    <a href="#signup" class="cta-btn">Get Early Access</a>
+    <span class="cta-sub">Be first to know when VentShield launches.</span>
+  </div>
+</header>
+
+<section id="problem">
+  <div class="container">
+    <div class="section-label">The Problem</div>
+    <h2>Your AC is circulating more than cool air.</h2>
+    <p>Behind those louvers, ductwork collects mold, dust, and biofilm for years. Every time the AC kicks on, it pushes that directly into your lungs.</p>
+    <div class="problem-grid">
+      <div class="problem-card">
+        <h3>Hotels &amp; Airbnbs</h3>
+        <p>You can't inspect the ducts. You can't control the HVAC. You just breathe whatever comes out of the ceiling vent.</p>
+      </div>
+      <div class="problem-card">
+        <h3>Rental apartments</h3>
+        <p>Your landlord says the ducts were cleaned "before move-in." The black residue around your vent says otherwise.</p>
+      </div>
+      <div class="problem-card">
+        <h3>Existing filters fail</h3>
+        <p>Adhesive filter sheets fall off ceiling vents within days. They choke airflow. They give you no signal when they stop working.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="container">
+    <div class="section-label">How It Works</div>
+    <h2>10 seconds to cleaner air.</h2>
+    <div class="steps">
+      <div class="step">
+        <h3>Snap on</h3>
+        <p>Press VentShield over any standard vent register. Embedded magnets grab metal registers. Friction-grip edges hold plastic ones. Works on ceilings.</p>
+      </div>
+      <div class="step">
+        <h3>Breathe clean</h3>
+        <p>MERV 8-11 antimicrobial filter media captures mold spores, dust, and allergens before they enter your space. Doesn't choke airflow.</p>
+      </div>
+      <div class="step">
+        <h3>Swap when yellow</h3>
+        <p>The color-change indicator strip turns from white to yellow to brown as particulate builds up. Slide out old insert, slide in new. 10 seconds.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="features">
+  <div class="container">
+    <div class="section-label">Why VentShield</div>
+    <h2>Built for the problem, not the shelf.</h2>
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon">M</div>
+        <h3>Magnetic + friction grip</h3>
+        <p>Dual-mode attachment works on metal and plastic registers. Embedded N52 neodymium magnets hold against gravity on ceiling vents. No adhesive, no velcro, no damage.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">A</div>
+        <h3>Antimicrobial media</h3>
+        <p>Silver-ion treated filter inserts don't just catch mold spores — they inhibit growth on the filter surface itself. MERV 8-11 rated for real particulate capture.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">C</div>
+        <h3>Color-change indicator</h3>
+        <p>No guessing when to replace. The integrated saturation strip shifts color as the filter loads up. White is fresh. Brown means swap it.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">P</div>
+        <h3>Packs flat for travel</h3>
+        <p>Living-hinge design collapses the frame to ~30% of its deployed size. Under 15mm thick with a filter insert. Fits in a laptop sleeve.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="compare">
+  <div class="container">
+    <div class="section-label">Comparison</div>
+    <h2>Not another adhesive sheet.</h2>
+    <div style="overflow-x:auto">
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Generic vent filters</th>
+            <th>VentShield</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Ceiling mounting</td><td class="x">Adhesive — falls off</td><td class="check">Magnets + grip</td></tr>
+          <tr><td>Reusable frame</td><td class="x">Disposable</td><td class="check">Replace inserts only</td></tr>
+          <tr><td>Travel-ready</td><td class="x">Flat, fragile</td><td class="check">Collapsible, packable</td></tr>
+          <tr><td>Mold-specific</td><td class="x">Generic</td><td class="check">Antimicrobial media</td></tr>
+          <tr><td>Replacement signal</td><td class="x">None</td><td class="check">Color-change strip</td></tr>
+          <tr><td>Sized to fit</td><td class="x">Cut-to-size</td><td class="check">3 SKUs, 80% coverage</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="container">
+    <div class="section-label">Pricing</div>
+    <h2>Frame once. Filters forever.</h2>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <h3>Frame</h3>
+        <div class="price">$18 <span>one-time</span></div>
+        <ul>
+          <li>Reusable flexible frame</li>
+          <li>Embedded magnets</li>
+          <li>Friction-grip edges</li>
+          <li>Hand-washable</li>
+        </ul>
+      </div>
+      <div class="price-card featured">
+        <h3>Travel Kit</h3>
+        <div class="price">$30 <span>complete</span></div>
+        <ul>
+          <li>1 frame (your size)</li>
+          <li>4 antimicrobial inserts</li>
+          <li>Carrying pouch</li>
+          <li>3-month supply</li>
+        </ul>
+      </div>
+      <div class="price-card">
+        <h3>Auto-Ship</h3>
+        <div class="price">$10 <span>/ quarter</span></div>
+        <ul>
+          <li>4 replacement inserts</li>
+          <li>Delivered quarterly</li>
+          <li>Cancel anytime</li>
+          <li>~17% savings</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="container">
+    <div class="section-label">FAQ</div>
+    <h2>Questions.</h2>
+
+    <details>
+      <summary>Does it reduce airflow?</summary>
+      <p>Minimally. MERV 8-11 media is designed for residential HVAC pressure drops. You shouldn't notice a difference in room temperature or comfort. We test with an anemometer to verify.</p>
+    </details>
+
+    <details>
+      <summary>Will it fit my vent?</summary>
+      <p>Three sizes cover roughly 80% of US residential and hotel registers. Small (6x10"), Medium (6x12"), Large (10-12" square). If your vent is metal, magnets hold it. If plastic, the friction grip handles it.</p>
+    </details>
+
+    <details>
+      <summary>Can I wash the filter inserts?</summary>
+      <p>No. The antimicrobial treatment and media structure degrade when wet. Replace them — that's what the color indicator is for. The frame is hand-washable with mild soap.</p>
+    </details>
+
+    <details>
+      <summary>How often do I replace inserts?</summary>
+      <p>Every 30-90 days depending on your air quality, humidity, and HVAC runtime. The color-change strip takes the guesswork out — when it's brown, swap it.</p>
+    </details>
+
+    <details>
+      <summary>Is it noisy?</summary>
+      <p>No. The filter media actually dampens turbulence slightly. If anything, it's quieter than a bare vent.</p>
+    </details>
+  </div>
+</section>
+
+<section class="signup" id="signup">
+  <div class="container">
+    <div class="section-label">Early Access</div>
+    <h2>Be first.</h2>
+    <p>VentShield is in prototype. Drop your email and we'll let you know when it's ready.</p>
+    <form class="email-form" action="#" method="POST">
+      <input type="email" name="email" placeholder="you@email.com" required>
+      <button type="submit">Notify Me</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    &copy; 2026 VentShield. Built from frustration, not a focus group.
+  </div>
+</footer>
+
+</body>
+</html>
